@@ -11,8 +11,8 @@ from sphinx.transforms import SphinxTransform
 
 def configure_app(app):
     app.add_transform(AddPanels)
-    app.add_stylesheet('panels.css')
-    app.add_javascript('panels.js')
+    app.add_css_file('panels.css')
+    app.add_js_file('panels.js')
 
 
 class AddPanels(SphinxTransform):

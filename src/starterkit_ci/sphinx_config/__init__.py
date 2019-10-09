@@ -1,3 +1,5 @@
+from os.path import dirname
+
 from recommonmark.transform import AutoStructify
 
 from . import panels
@@ -30,7 +32,7 @@ html_context = {
 highlight_language = 'none'
 
 html_static_path = [
-    '_static',
+    f'{dirname(__file__)}/_static',
 ]
 
 linkcheck_ignore = [

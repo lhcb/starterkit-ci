@@ -31,7 +31,7 @@ class AddPanels(SphinxTransform):
     }
 
     def apply(self, **kwargs):
-        for node in self.document.traverse(nodes.Element):
+        for node in self.document.traverse(nodes.Element)[::-1]:
             match = re.match(r'^ *{%\s*(\w+)\s*"([^"]+)"\s*%} *$', node.rawsource)
             if match:
                 panel_type, title = match.groups()

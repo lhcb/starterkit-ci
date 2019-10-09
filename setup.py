@@ -34,10 +34,9 @@ setup(
     install_requires=[
         'sphinx',
         'sphinx-rtd-theme',
-        # FIXME: Inline math is broken in upstream recommonmark
-        'recommonmark @ git+https://github.com/chrisburr/recommonmark.git@patch-1',
+        'recommonmark',
     ],
-    zip_safe=True,
+    zip_safe=False,
     entry_points={
         'console_scripts': {
             'starterkit_ci = starterkit_ci:parse_args',

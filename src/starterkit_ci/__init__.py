@@ -34,12 +34,19 @@ def parse_args():
 
 
 def clean_docs(source_dir, allow_warnings=False):
-    check_call(['sphinx-build', '-M', 'clean', SOURCE_DIR, BUILD_DIR, '-W'], cwd=source_dir)
+    _sphinx_build('clean', source_dir, allow_warnings)
 
 
 def build_docs(source_dir, allow_warnings=False):
-    check_call(['sphinx-build', '-M', 'html', SOURCE_DIR, BUILD_DIR, '-W'], cwd=source_dir)
+    _sphinx_build('html', source_dir, allow_warnings)
 
 
 def check_docs(source_dir, allow_warnings=False):
-    check_call(['sphinx-build', '-M', 'linkcheck', SOURCE_DIR, BUILD_DIR, '-W'], cwd=source_dir)
+    _sphinx_build('linkcheck', source_dir, allow_warnings)
+
+
+def _sphinx_build(cmd, source_dir, allow_warnings):
+    cmd = ['sphinx-build', '-M', cmd, SOURCE_DIR, BUILD_DIR]
+    if not allow_warnings:
+        cmd += ['-W']
+    return check_call(cmd, cwd=source_dir)

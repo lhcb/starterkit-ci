@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+import os
 from os.path import abspath, dirname, join
 from io import open
 
@@ -7,6 +8,10 @@ here = abspath(dirname(__file__))
 # Get the long description from the README file
 with open(join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
+
+package_data = []
+for root, dirs, files in os.walk(join(here, 'src/starterkit_ci/sphinx_config/_static')):
+    package_data += [join(root, fn) for fn in files]
 
 setup(
     name='starterkit_ci',
@@ -36,6 +41,9 @@ setup(
         'sphinx-rtd-theme',
         'recommonmark',
     ],
+    package_data={
+        'starterkit_ci': package_data,
+    },
     zip_safe=False,
     entry_points={
         'console_scripts': {

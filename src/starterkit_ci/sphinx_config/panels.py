@@ -63,7 +63,7 @@ class AddPanels(SphinxTransform):
                     panel_body.append(inner_node)
 
                 # Create the title text
-                header_text = nodes.paragraph()
+                header_text = nodes.paragraph(ids=[title.replace(' ', '-').lower()])
                 header_text.append(nodes.raw('', f'<i class="fa fa-{icon}"></i> ', format='html'))
                 header_text.append(nodes.Text(title))
 

@@ -48,7 +48,7 @@ def check_docs(source_dir, allow_warnings=False):
     _sphinx_build('linkcheck', source_dir, allow_warnings)
 
 
-def deploy_docs(source_dir):
+def deploy_docs(source_dir, allow_warnings=False):
     if os.environ['TRAVIS_BRANCH'] != 'master':
         print('This commit was made against', os.environ['TRAVIS_BRANCH'],
               'and not the master! No deploy!')

@@ -5,7 +5,9 @@ __all__ = [
 
 import argparse
 import os
-from subprocess import check_call
+from os.path import join
+import shutil
+from subprocess import check_call, check_output
 
 from . import sphinx_config
 
@@ -18,6 +20,7 @@ def parse_args():
         'clean': clean_docs,
         'build': build_docs,
         'check': check_docs,
+        'deploy': deploy_docs,
     }
 
     parser = argparse.ArgumentParser()
@@ -43,6 +46,32 @@ def build_docs(source_dir, allow_warnings=False):
 
 def check_docs(source_dir, allow_warnings=False):
     _sphinx_build('linkcheck', source_dir, allow_warnings)
+
+
+def deploy_docs(source_dir):
+    if os.environ['TRAVIS_BRANCH'] != 'master':
+        print('This commit was made against', os.environ['TRAVIS_BRANCH'],
+              'and not the master! No deploy!')
+        return
+
+    built_dir = join(source_dir, BUILD_DIR, 'build/html')
+    git_rev = check_output(['git', 'rev-parse', '--short', 'HEAD'], cwd=source_dir)
+    shutil.copy(join(source_dir, SOURCE_DIR, '.nojekyll'), built_dir)
+
+    check_call(['git', 'init'], cwd=built_dir)
+    check_call(['git', 'config', 'user.name', 'Alex Pearce'], cwd=built_dir)
+    check_call(['git', 'config', 'user.email', 'alex@alexpearce.me'], cwd=built_dir)
+
+    push_url = 'https://' + os.environ['GH_TOKEN'] + '@github.com/lhcb/starterkit-lessons.git'
+    check_call(['git', 'remote', 'add', 'upstream', push_url], cwd=built_dir)
+    check_call(['git', 'fetch', 'upstream'], cwd=built_dir)
+    check_call(['git', 'reset', 'upstream/gh-pages'], cwd=built_dir)
+
+    check_call(['touch', '.'], cwd=built_dir)
+
+    check_call(['git', 'add', '-A', '.'], cwd=built_dir)
+    check_call(['git', 'commit', '-m', 'Rebuild pages at ' + git_rev], cwd=built_dir)
+    check_call(['git', 'push', '-q', 'upstream HEAD:gh-pages'], cwd=built_dir)
 
 
 def _sphinx_build(cmd, source_dir, allow_warnings):

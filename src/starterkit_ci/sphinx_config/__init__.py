@@ -10,10 +10,11 @@ extensions = [
     'sphinx_rtd_theme',
     'recommonmark',
     'sphinx.ext.mathjax',
+    'nbsphinx',
 ]
 
 templates_path = [
-    '_templates'
+    '_templates',
 ]
 
 html_theme = 'sphinx_rtd_theme'
@@ -21,6 +22,10 @@ html_show_sourcelink = True
 html_theme_options = {
     'collapse_navigation': False,
 }
+
+exclude_patterns = [
+    '**.ipynb_checkpoints',
+]
 
 html_context = {
     'display_github': True,

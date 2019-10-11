@@ -40,6 +40,7 @@ setup(
         'sphinx',
         'sphinx-rtd-theme',
         'recommonmark',
+        'nbsphinx',
     ],
     package_data={
         'starterkit_ci': package_data,

@@ -72,7 +72,7 @@ def deploy_docs(source_dir, allow_warnings=False):
 
     check_call(['git', 'add', '-A', '.'], cwd=built_dir)
     check_call(['git', 'commit', '-m', 'Rebuild pages at ' + git_rev], cwd=built_dir)
-    check_call(['git', 'push', '-q', 'upstream HEAD:gh-pages'], cwd=built_dir)
+    check_call(['git', 'push', '-q', 'upstream', 'HEAD:gh-pages'], cwd=built_dir)
 
 
 def _sphinx_build(cmd, source_dir, allow_warnings):

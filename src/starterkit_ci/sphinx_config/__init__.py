@@ -79,7 +79,7 @@ def setup(app):
         # pdb.set_trace()
         origin = join(app.outdir, origin)
         print('Creating redirect from', origin, 'to', target)
-        os.makedirs(dirname(origin))
+        os.makedirs(dirname(origin), exist_ok=True)
         with open(origin, 'wt') as fp:
             fp.write(f'<meta http-equiv="refresh" content="0; url={target}">\n')
             fp.write(f'<link rel="canonical" href="{target}" />\n')

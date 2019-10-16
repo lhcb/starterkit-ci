@@ -1,4 +1,5 @@
-from os.path import dirname
+import os
+from os.path import dirname, join
 
 from recommonmark.transform import AutoStructify
 
@@ -55,6 +56,8 @@ linkcheck_ignore = [
 ]
 linkcheck_workers = 32
 
+starterkit_ci_redirects = {}
+
 
 def setup(app):
     app.add_config_value('recommonmark_config', {
@@ -69,6 +72,17 @@ def setup(app):
     panels.configure_app(app)
     for extra_setup_func in setup.extra_setup_funcs:
         extra_setup_func(app)
+
+    # Create redirects
+    for origin, target in starterkit_ci_redirects.items():
+        # import pdb
+        # pdb.set_trace()
+        origin = join(app.outdir, origin)
+        print('Creating redirect from', origin, 'to', target)
+        os.makedirs(dirname(origin))
+        with open(origin, 'wt') as fp:
+            fp.write(f'<meta http-equiv="refresh" content="0; url={target}">\n')
+            fp.write(f'<link rel="canonical" href="{target}" />\n')
 
 
 # Allow additional setup functions to be defined in projects

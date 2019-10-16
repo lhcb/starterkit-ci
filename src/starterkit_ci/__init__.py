@@ -55,7 +55,8 @@ def deploy_docs(source_dir, allow_warnings=False):
         return
 
     built_dir = join(source_dir, BUILD_DIR, 'html')
-    git_rev = check_output(['git', 'rev-parse', '--short', 'HEAD'], cwd=source_dir)
+    git_rev = check_output(['git', 'rev-parse', '--short', 'HEAD'],
+                           cwd=source_dir, universal_newlines=True)
     shutil.copy(join(source_dir, SOURCE_DIR, '.nojekyll'), built_dir)
 
     check_call(['git', 'init'], cwd=built_dir)

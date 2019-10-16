@@ -54,7 +54,7 @@ def deploy_docs(source_dir, allow_warnings=False):
               'and not the master! No deploy!')
         return
 
-    built_dir = join(source_dir, BUILD_DIR, 'build/html')
+    built_dir = join(source_dir, BUILD_DIR, 'html')
     git_rev = check_output(['git', 'rev-parse', '--short', 'HEAD'], cwd=source_dir)
     shutil.copy(join(source_dir, SOURCE_DIR, '.nojekyll'), built_dir)
 

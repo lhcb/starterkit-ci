@@ -63,7 +63,7 @@ def deploy_docs(source_dir, allow_warnings=False):
     check_call(['git', 'config', 'user.name', 'Alex Pearce'], cwd=built_dir)
     check_call(['git', 'config', 'user.email', 'alex@alexpearce.me'], cwd=built_dir)
 
-    push_url = 'https://' + os.environ['GH_TOKEN'] + '@github.com/lhcb/starterkit-lessons.git'
+    push_url = 'https://' + os.environ['GH_TOKEN'] + '@github.com/' + os.environ['TRAVIS_REPO_SLUG'] + '.git'
     check_call(['git', 'remote', 'add', 'upstream', push_url], cwd=built_dir)
     check_call(['git', 'fetch', 'upstream'], cwd=built_dir)
     check_call(['git', 'reset', 'upstream/gh-pages'], cwd=built_dir)

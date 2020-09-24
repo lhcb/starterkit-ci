@@ -40,6 +40,7 @@ setup(
         'sphinx',
         'sphinx-rtd-theme',
         'recommonmark',
+        'sphinx-markdown-parser',
         'nbsphinx',
     ],
     package_data={

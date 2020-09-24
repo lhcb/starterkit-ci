@@ -1,7 +1,9 @@
 import os
 from os.path import dirname, join
 
-from recommonmark.transform import AutoStructify
+from sphinx_markdown_parser.parser import MarkdownParser
+from recommonmark.parser import CommonMarkParser
+from sphinx_markdown_parser.transform import AutoStructify
 
 from . import panels
 from . import fix_markdown_file_downloads
@@ -9,7 +11,7 @@ from . import fix_markdown_file_downloads
 
 extensions = [
     'sphinx_rtd_theme',
-    'recommonmark',
+    'sphinx_markdown_parser',
     'sphinx.ext.mathjax',
     'nbsphinx',
 ]
@@ -60,12 +62,23 @@ starterkit_ci_redirects = {}
 
 
 def setup(app):
-    app.add_config_value('recommonmark_config', {
-        # 'url_resolver': lambda url: 'http://0.0.0.0/' + url,
-        'auto_toc_tree_section': 'Contents',
-        'enable_math': True,
-        'enable_inline_math': True,
+    app.add_source_suffix('.md', 'markdown')
+    #app.add_source_parser(MarkdownParser)
+    app.add_source_parser(CommonMarkParser)
+    app.add_config_value('markdown_parser_config', {
+        'auto_toc_tree_section': 'Content',
+        'enable_auto_doc_ref': True,
+        'enable_auto_toc_tree': True,
         'enable_eval_rst': True,
+        'extensions': [
+            'extra',
+            'nl2br',
+            'sane_lists',
+            'smarty',
+            'toc',
+            'wikilinks',
+            'pymdownx.arithmatex',
+        ],
     }, True)
     app.add_transform(AutoStructify)
     fix_markdown_file_downloads.configure_app(app)

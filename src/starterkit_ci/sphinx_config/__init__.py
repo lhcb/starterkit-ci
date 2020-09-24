@@ -67,7 +67,6 @@ def setup(app):
     app.add_source_parser(CommonMarkParser)
     app.add_config_value('markdown_parser_config', {
         'auto_toc_tree_section': 'Content',
-        'enable_auto_doc_ref': True,
         'enable_auto_toc_tree': True,
         'enable_eval_rst': True,
         'extensions': [

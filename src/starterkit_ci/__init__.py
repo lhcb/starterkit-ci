@@ -76,7 +76,7 @@ def deploy_docs(source_dir, allow_warnings=False):
 
 
 def _sphinx_build(cmd, source_dir, allow_warnings):
-    cmd = ['sphinx-build', '-M', cmd, SOURCE_DIR, BUILD_DIR]
+    cmd = ['sphinx-build', '-M', cmd, SOURCE_DIR, BUILD_DIR, '-j', 'auto']
     if not allow_warnings:
         cmd += ['-W']
     return check_call(cmd, cwd=source_dir)

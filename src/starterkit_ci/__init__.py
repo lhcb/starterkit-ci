@@ -63,7 +63,12 @@ def deploy_docs(source_dir, allow_warnings=False):
     check_call(['git', 'config', 'user.name', 'github-actions[bot]'], cwd=built_dir)
     check_call(['git', 'config', 'user.email', 'github-actions[bot]@users.noreply.github.com'], cwd=built_dir)
 
-    push_url = 'git@github.com:' + os.environ['TRAVIS_REPO_SLUG'] + '.git'
+    push_url = "https://%s:%s@github.com/%s.git" % (
+        os.environ['GITHUB_ACTOR'],
+        os.environ['INPUT_GITHUB_TOKEN'],
+        os.environ['TRAVIS_REPO_SLUG'],
+    )
+    # push_url = 'git@github.com:' + os.environ['TRAVIS_REPO_SLUG'] + '.git'
     check_call(['git', 'remote', 'add', 'upstream', push_url], cwd=built_dir)
     check_call(['git', 'fetch', 'upstream'], cwd=built_dir)
     check_call(['git', 'reset', 'upstream/gh-pages'], cwd=built_dir)

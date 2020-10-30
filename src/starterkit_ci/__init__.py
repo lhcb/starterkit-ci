@@ -60,10 +60,10 @@ def deploy_docs(source_dir, allow_warnings=False):
     shutil.copy(join(source_dir, SOURCE_DIR, '.nojekyll'), built_dir)
 
     check_call(['git', 'init'], cwd=built_dir)
-    check_call(['git', 'config', 'user.name', 'Alex Pearce'], cwd=built_dir)
-    check_call(['git', 'config', 'user.email', 'alex@alexpearce.me'], cwd=built_dir)
+    check_call(['git', 'config', 'user.name', 'github-actions[bot]'], cwd=built_dir)
+    check_call(['git', 'config', 'user.email', 'github-actions[bot]@users.noreply.github.com'], cwd=built_dir)
 
-    push_url = 'https://' + os.environ['GH_TOKEN'] + '@github.com/' + os.environ['TRAVIS_REPO_SLUG'] + '.git'
+    push_url = 'git@github.com:' + os.environ['TRAVIS_REPO_SLUG'] + '.git'
     check_call(['git', 'remote', 'add', 'upstream', push_url], cwd=built_dir)
     check_call(['git', 'fetch', 'upstream'], cwd=built_dir)
     check_call(['git', 'reset', 'upstream/gh-pages'], cwd=built_dir)
@@ -76,7 +76,7 @@ def deploy_docs(source_dir, allow_warnings=False):
 
 
 def _sphinx_build(cmd, source_dir, allow_warnings):
-    cmd = ['sphinx-build', '-M', cmd, SOURCE_DIR, BUILD_DIR, '-j', 'auto']
+    cmd = ['sphinx-build', '-M', cmd, SOURCE_DIR, BUILD_DIR, '-j', '1']
     if not allow_warnings:
         cmd += ['-W']
     return check_call(cmd, cwd=source_dir)

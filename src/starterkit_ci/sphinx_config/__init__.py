@@ -53,6 +53,8 @@ linkcheck_ignore = [
     r'https://gitlab\.cern\.ch/lhcb/Stripping/blob/.*',
     # Seems to be unreliable?
     r'http://pdg.*\.lbl\.gov/.*',
+    # 403 if not logged in
+    r'https://groups\.cern\.ch/group/lhcb-distributed-analysis/default\.aspx',
     # FIXME: The URLs have changed
     r'https://research\.cs\.wisc\.edu/htcondor/.*',
 ]

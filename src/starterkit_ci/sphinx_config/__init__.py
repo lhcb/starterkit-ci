@@ -64,9 +64,14 @@ starterkit_ci_redirects = {}
 
 
 def setup(app):
+    # Workaround for https://github.com/readthedocs/recommonmark/issues/177
+    class CustomCommonMarkParser(CommonMarkParser):
+        def visit_document(self, node):
+            pass
+
     app.add_source_suffix('.md', 'markdown')
     #app.add_source_parser(MarkdownParser)
-    app.add_source_parser(CommonMarkParser)
+    app.add_source_parser(CustomCommonMarkParser)
     app.add_config_value('markdown_parser_config', {
         'auto_toc_tree_section': 'Content',
         'enable_auto_toc_tree': True,

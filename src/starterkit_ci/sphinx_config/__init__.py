@@ -53,6 +53,8 @@ linkcheck_ignore = [
     r'https://gitlab\.cern\.ch/lhcb/Stripping/blob/.*',
     # Seems to be unreliable?
     r'http://pdg.*\.lbl\.gov/.*',
+    # 403 if not logged in
+    r'https://groups\.cern\.ch/group/lhcb-distributed-analysis/default\.aspx',
     # FIXME: The URLs have changed
     r'https://research\.cs\.wisc\.edu/htcondor/.*',
 ]
@@ -62,9 +64,14 @@ starterkit_ci_redirects = {}
 
 
 def setup(app):
+    # Workaround for https://github.com/readthedocs/recommonmark/issues/177
+    class CustomCommonMarkParser(CommonMarkParser):
+        def visit_document(self, node):
+            pass
+
     app.add_source_suffix('.md', 'markdown')
     #app.add_source_parser(MarkdownParser)
-    app.add_source_parser(CommonMarkParser)
+    app.add_source_parser(CustomCommonMarkParser)
     app.add_config_value('markdown_parser_config', {
         'auto_toc_tree_section': 'Content',
         'enable_auto_toc_tree': True,

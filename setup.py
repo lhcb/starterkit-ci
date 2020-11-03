@@ -53,7 +53,7 @@ setup(
         }
     },
     project_urls={
-        'Bug Reports': 'https://github.com/lhcb/starterkit_ci/issues',
-        'Source': 'https://github.com/lhcb/starterkit_ci',
+        'Bug Reports': 'https://github.com/lhcb/starterkit-ci/issues',
+        'Source': 'https://github.com/lhcb/starterkit-ci',
     },
 )

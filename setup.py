@@ -42,6 +42,8 @@ setup(
         'recommonmark',
         'sphinx-markdown-parser',
         'nbsphinx',
+        'markdown<=3.1.1',  # https://github.com/Python-Markdown/markdown/issues/950
+        'pymdown-extensions<=6.2.1',
     ],
     package_data={
         'starterkit_ci': package_data,

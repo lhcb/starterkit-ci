@@ -32,9 +32,15 @@ class AddPanels(SphinxTransform):
 
     def apply(self, **kwargs):
         for node in reversed(list(self.document.traverse(nodes.Element))):
-            match = re.match(r'^ *{%\s*(\w+)\s*"([^"]+)"\s*%} *$', node.rawsource)
+            if node.tagname != 'paragraph':
+                continue
+            match = re.match(
+                (r'^ *{%\s*(?P<type>\w+)\s*'
+                 r'("|&ldquo;)(?P<title>[^"]+)("|&rdquo;)\s*%} *$'),
+                node.rawsource)
             if match:
-                panel_type, title = match.groups()
+                panel_type = match.group('type')
+                title = match.group('title')
                 try:
                     visibile, icon = self.panel_defaults[panel_type]
                 except KeyError:
@@ -48,7 +54,6 @@ class AddPanels(SphinxTransform):
                     inner_node = inner_node.next_node(descend=False, siblings=True, ascend=False)
                     if inner_node is None:
                         raise ValueError(f'Failed to find end block for {node.rawsource} in {node.source}')
-                    match = re.match(r'^ *{%\s*(\w+)\s*"([^"]+)"\s*%} *$', node.rawsource)
                     # Check if we're at the end of the panel block
                     if re.match(r'^\s*{%\s*end' + panel_type + r'\s*%}\s*$', inner_node.rawsource):
                         inner_node.parent.remove(inner_node)

@@ -53,6 +53,8 @@ linkcheck_ignore = [
     r"https://gitlab\.cern\.ch/.*/merge_requests/new",
     # GitLab line anchors are not in the HTML source
     r"https://gitlab\.cern\.ch/.*/blob/.+#L\d+",
+    # PDG Live returns 500s to linkcheck requests
+    r"https?://pdg.*\.lbl\.gov/.*",
 ]
 
 

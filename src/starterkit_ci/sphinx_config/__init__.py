@@ -56,14 +56,15 @@ linkcheck_ignore = [
 ]
 
 
-linkcheck_workers = 32
+linkcheck_workers = 8
+linkcheck_timeout = 60
+linkcheck_retries = 2
 
 
 starterkit_ci_redirects = {}
 
 
 source_suffix = {
-    ".rst": "restructuredtext",
     ".md": "markdown",
 }
 

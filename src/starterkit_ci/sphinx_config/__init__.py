@@ -46,13 +46,13 @@ html_static_path = [
 
 
 linkcheck_ignore = [
+    # Certificate verification fails (CERTIFICATE_VERIFY_FAILED)
     r"https://lhcb-portal-dirac\.cern\.ch/DIRAC/",
     r"https://lhcb-nightlies\.cern\.ch.*",
+    # Returns 404 for /merge_requests/new URLs
     r"https://gitlab\.cern\.ch/.*/merge_requests/new",
-    r"https://lhcb\.cern\.ch/lhcb/Stripping/blob/.*",
-    r"http://pdg.*\.lbl\.gov/.*",
-    r"https://groups\.cern\.ch/group/lhcb-distributed-analysis/default\.aspx",
-    r"https://research\.cs\.wisc\.edu/htcondor/.*",
+    # GitLab line anchors are not in the HTML source
+    r"https://gitlab\.cern\.ch/.*/blob/.+#L\d+",
 ]
 
 

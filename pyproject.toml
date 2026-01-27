@@ -14,7 +14,7 @@ description = "Helpers for Starterkit Continuous Integration"
 readme = "README.md"
 requires-python = ">=3.8"
 
-license = { file = "LICENSE.md" }
+license = { file = "LICENSE" }
 
 authors = [
   { name = "LHCb Starterkit" },
@@ -40,7 +40,7 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/lhcb/starterkit_ci"
+"Homepage" = "https://github.com/lhcb/starterkit-ci"
 "Bug Reports" = "https://github.com/lhcb/starterkit-ci/issues"
 "Source" = "https://github.com/lhcb/starterkit-ci"
 

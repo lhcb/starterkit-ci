@@ -14,8 +14,9 @@ The workflow in `.github/workflows/publish.yml` will:
 To enable trusted publishing for this package on PyPI, a PyPI maintainer needs to:
 
 1. Go to https://pypi.org/manage/project/starterkit-ci/settings/publishing/
+   (Note: PyPI normalizes package names, so `starterkit-ci` and `starterkit_ci` refer to the same project)
 2. Add a new "pending publisher" with the following details:
-   - **PyPI Project Name**: `starterkit_ci`
+   - **PyPI Project Name**: `starterkit_ci` (as defined in pyproject.toml)
    - **Owner**: `lhcb`
    - **Repository name**: `starterkit-ci`
    - **Workflow name**: `publish.yml`

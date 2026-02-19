@@ -82,7 +82,7 @@ myst_enable_extensions = [
 def setup(app):
     fix_markdown_file_downloads.configure_app(app)
     panels.configure_app(app)
-    for extra_setup_func in setup.extra_setup_funcs:
+    for extra_setup_func in setup.extra_setup_funcs:  # type: ignore[attr-defined]
         extra_setup_func(app)
 
     # Create redirects
@@ -96,4 +96,4 @@ def setup(app):
 
 
 # Allow additional setup functions to be defined in projects
-setup.extra_setup_funcs = []
+setup.extra_setup_funcs = []  # type: ignore[attr-defined]

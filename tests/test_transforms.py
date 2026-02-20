@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import pytest
 from docutils import nodes
 from docutils.utils import new_document

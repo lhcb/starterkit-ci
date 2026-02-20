@@ -1,0 +1,17 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.1
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: ty
+        name: ty
+        entry: ty check --ignore unresolved-import
+        language: python
+        additional_dependencies: [ty==0.0.17]
+        types_or: [python, pyi]
+        pass_filenames: false

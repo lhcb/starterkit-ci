@@ -1,23 +1,18 @@
-name: pre-commit
+name: prek
 
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
 
 jobs:
-  pre-commit:
-    name: Run pre-commit hooks
+  prek:
+    name: Run prek hooks
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - uses: pre-commit/action@v3.0.1
+      - uses: j178/prek-action@v1

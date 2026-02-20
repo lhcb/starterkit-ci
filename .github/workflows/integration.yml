@@ -1,0 +1,54 @@
+name: integration
+
+on:
+  workflow_dispatch:
+    inputs:
+      starterkit_repo:
+        description: "Repository to test (owner/name)"
+        required: false
+        default: "lhcb/starterkit-lessons"
+      starterkit_ref:
+        description: "Branch or tag to test"
+        required: false
+        default: "master"
+  schedule:
+    - cron: "0 3 * * 1"
+
+concurrency:
+  group: integration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  starterkit-real-repo:
+    name: Real Starterkit Repo
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Install starterkit-ci
+        run: uv sync --frozen
+
+      - name: Clone Starterkit Repository
+        run: |
+          git clone \
+            --depth 1 \
+            --branch "${{ inputs.starterkit_ref || 'master' }}" \
+            "https://github.com/${{ inputs.starterkit_repo || 'lhcb/starterkit-lessons' }}.git" \
+            starterkit-lessons
+
+      - name: Build docs
+        run: uv run starterkit-ci build --source-dir starterkit-lessons
+
+      - name: Run link checks
+        run: uv run starterkit-ci check --source-dir starterkit-lessons

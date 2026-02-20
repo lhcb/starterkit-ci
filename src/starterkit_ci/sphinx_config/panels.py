@@ -31,7 +31,7 @@ class AddPanels(SphinxTransform):
     }
 
     def apply(self, **kwargs):
-        for node in reversed(list(self.document.traverse(nodes.Element))):
+        for node in reversed(list(self.document.findall(nodes.Element))):
             match = re.match(r'^ *{%\s*(\w+)\s*"([^"]+)"\s*%} *$', node.rawsource)
             if match:
                 panel_type, title = match.groups()
@@ -54,9 +54,6 @@ class AddPanels(SphinxTransform):
                         raise ValueError(
                             f"Failed to find end block for {node.rawsource} in {node.source}"
                         )
-                    match = re.match(
-                        r'^ *{%\s*(\w+)\s*"([^"]+)"\s*%} *$', node.rawsource
-                    )
                     # Check if we're at the end of the panel block
                     if re.match(
                         r"^\s*{%\s*end" + panel_type + r"\s*%}\s*$",

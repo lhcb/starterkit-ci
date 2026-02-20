@@ -18,8 +18,14 @@ class FixMarkdownDownloads(SphinxTransform):
     default_priority = 5
 
     def apply(self, **kwargs):
-        for old_node in self.document.traverse(pending_xref):
-            if not isfile(join(dirname(old_node.source), old_node["reftarget"])):
+        for old_node in list(self.document.findall(pending_xref)):
+            source = getattr(old_node, "source", None)
+            reftarget = old_node.get("reftarget")
+            if not source or not reftarget:
+                continue
+            if not old_node.children or not old_node.children[0].children:
+                continue
+            if not isfile(join(dirname(source), reftarget)):
                 continue
             node1 = nodes.literal(
                 "", "", *old_node.children[0].children, classes=["xref", "download"]

@@ -11,7 +11,7 @@ dynamic = ["version"]
 
 description = "Helpers for Starterkit Continuous Integration"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 
 license = "BSD-3-Clause"
 license-files = ["LICENSE"]
@@ -25,10 +25,11 @@ keywords = ["Starterkit"]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 
 dependencies = [
@@ -38,12 +39,28 @@ dependencies = [
   "nbsphinx>=0.9",
 ]
 
+[dependency-groups]
+test = [
+  "pytest>=8.4",
+  "pytest-cov>=5.0",
+]
+lint = [
+  "pre-commit>=4.0",
+  "ruff>=0.15.0",
+  "ty>=0.0.17",
+]
+dev = [
+  {include-group = "test"},
+  {include-group = "lint"},
+]
+
 [project.urls]
 "Homepage" = "https://github.com/lhcb/starterkit-ci"
 "Bug Reports" = "https://github.com/lhcb/starterkit-ci/issues"
 "Source" = "https://github.com/lhcb/starterkit-ci"
 
 [project.scripts]
+starterkit-ci = "starterkit_ci:parse_args"
 starterkit_ci = "starterkit_ci:parse_args"
 
 [tool.setuptools]
@@ -67,4 +84,4 @@ local_scheme = "node-and-date"
 max-line-length = 120
 
 [tool.pytest.ini_options]
-addopts = "--cov=cirun --cov-report=term-missing"
+addopts = "--cov=starterkit_ci --cov-report=term-missing"
